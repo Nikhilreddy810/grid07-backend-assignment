@@ -1,0 +1,116 @@
+{
+  "info": {
+    "name": "Grid07 Backend Assignment",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Create User",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": { "raw": "http://localhost:8080/api/users", "host": ["localhost"], "port": "8080", "path": ["api", "users"] },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"username\": \"nikhil\",\n  \"isPremium\": false\n}"
+        }
+      }
+    },
+    {
+      "name": "Create Bot",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": { "raw": "http://localhost:8080/api/bots", "host": ["localhost"], "port": "8080", "path": ["api", "bots"] },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"BotAlpha\",\n  \"personaDescription\": \"A helpful assistant bot\"\n}"
+        }
+      }
+    },
+    {
+      "name": "Create Post (User)",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": { "raw": "http://localhost:8080/api/posts", "host": ["localhost"], "port": "8080", "path": ["api", "posts"] },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"authorId\": 1,\n  \"authorType\": \"USER\",\n  \"content\": \"Hello world, this is my first post!\"\n}"
+        }
+      }
+    },
+    {
+      "name": "Create Post (Bot)",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": { "raw": "http://localhost:8080/api/posts", "host": ["localhost"], "port": "8080", "path": ["api", "posts"] },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"authorId\": 1,\n  \"authorType\": \"BOT\",\n  \"content\": \"Bot generated post content\"\n}"
+        }
+      }
+    },
+    {
+      "name": "Add Comment (Bot)",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": { "raw": "http://localhost:8080/api/posts/1/comments", "host": ["localhost"], "port": "8080", "path": ["api", "posts", "1", "comments"] },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"authorId\": 1,\n  \"authorType\": \"BOT\",\n  \"content\": \"Bot reply to post\",\n  \"depthLevel\": 0\n}"
+        }
+      }
+    },
+    {
+      "name": "Add Comment (User)",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": { "raw": "http://localhost:8080/api/posts/1/comments", "host": ["localhost"], "port": "8080", "path": ["api", "posts", "1", "comments"] },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"authorId\": 1,\n  \"authorType\": \"USER\",\n  \"content\": \"Human comment on post\",\n  \"depthLevel\": 0\n}"
+        }
+      }
+    },
+    {
+      "name": "Like Post",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": { "raw": "http://localhost:8080/api/posts/1/like", "host": ["localhost"], "port": "8080", "path": ["api", "posts", "1", "like"] },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"userId\": 1\n}"
+        }
+      }
+    },
+    {
+      "name": "Test - Depth Cap Exceeded (depthLevel 21)",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": { "raw": "http://localhost:8080/api/posts/1/comments", "host": ["localhost"], "port": "8080", "path": ["api", "posts", "1", "comments"] },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"authorId\": 1,\n  \"authorType\": \"BOT\",\n  \"content\": \"This should be rejected\",\n  \"depthLevel\": 21\n}"
+        }
+      }
+    },
+    {
+      "name": "Test - Bot Cooldown (fire twice quickly)",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": { "raw": "http://localhost:8080/api/posts/1/comments", "host": ["localhost"], "port": "8080", "path": ["api", "posts", "1", "comments"] },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"authorId\": 1,\n  \"authorType\": \"BOT\",\n  \"content\": \"Second bot reply - should be blocked by cooldown\",\n  \"depthLevel\": 0\n}"
+        }
+      }
+    }
+  ]
+}
